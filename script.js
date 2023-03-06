@@ -4,8 +4,9 @@ function game() {
     
     let playerScore = 0;
     let computerScore = 0;
+    const rounds = 5;
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= rounds; i++) {
         let playerSelection;
         do {
             playerSelection = prompt("Enter either rock, paper or scissors in the box:")
@@ -27,6 +28,14 @@ function game() {
         }
 
         console.log(`Player ${playerScore} - ${computerScore} Computer`);
+    }
+
+    if (playerScore > computerScore) {
+        console.log(`\nAfter ${rounds} rounds, you win!\nThe final score is ${playerScore} - ${computerScore}`);
+    } else if (playerScore < computerScore) {
+        console.log(`\nAfter ${rounds} rounds, you lose!\nThe final score is ${playerScore} - ${computerScore}`);
+    } else {
+        console.log(`\nAfter ${rounds} rounds, it's a draw!\nThe final score is ${playerScore} - ${computerScore}`);
     }
 }
 
