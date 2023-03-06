@@ -30,6 +30,11 @@ function game() {
         console.log(`Player ${playerScore} - ${computerScore} Computer`);
     }
 
+    printFinalScore(rounds, playerScore, computerScore);
+}
+
+
+function printFinalScore(rounds, playerScore, computerScore) {
     if (playerScore > computerScore) {
         console.log(`\nAfter ${rounds} rounds, you win!\nThe final score is ${playerScore} - ${computerScore}`);
     } else if (playerScore < computerScore) {
@@ -39,9 +44,11 @@ function game() {
     }
 }
 
+
 function capitaliseFirstLet(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
+
 
 function getComputerChoice() {
     let result = Math.floor(Math.random() * 3);
