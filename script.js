@@ -10,20 +10,20 @@ let countdown = document.querySelector(".countdown");
 
 let choice = document.querySelectorAll(".button");
 
+let uScore = 0;
+let cScore = 0;
+
 // pressing button plays a round
 for (let i = 0; i < choice.length; i++) {
-    choice[i].addEventListener("click", function(e) {
+    choice[i].addEventListener("click", function() {
         resetHands();
         
         // assign choices and get result
         let playerSelection = capitaliseFirstLetter(choice[i].innerHTML);
         let computerSelection = getComputerChoice();
-        let result = getRoundResult(playerSelection, computerSelection);
 
-        const countdown = [3, 2, 1, "GO"];
+        const countdown = ["3", "2"];
         playAnimation(playerSelection, computerSelection, countdown);
-
-        // updateScore(result);
     });
 }
 
@@ -37,6 +37,8 @@ function resetHands() {
     paperComp.classList.add("hidden");
     scissorsComp.classList.add("hidden");
     shakeComp.classList.add("hidden");
+
+    countdown.textContent = "";
 }
 
 function getComputerChoice() {
@@ -53,13 +55,13 @@ function getRoundResult(player, computer) {
              : computer === "Paper" ? "lose"
              : "win";
     } else if (player === "Paper") {
-        return computer === "Rock" ? "lose"
+        return computer === "Rock" ? "win"
              : computer === "Paper" ? "draw"
-             : "win";
-    } else {
-        return computer === "Rock" ? "draw"
-             : computer === "Paper" ? "win"
              : "lose";
+    } else {
+        return computer === "Rock" ? "lose"
+             : computer === "Paper" ? "win"
+             : "draw";
     }
 }
 
@@ -70,16 +72,23 @@ function delay(milliseconds) {
 }
 
 async function playAnimation(player, computer, count) {
+    let result = getRoundResult(player, computer);
+
     for (let i = 0; i < 2; i++) {
+        countdown.textContent = count[i];
         await delay(800);
         toggleCountdownHand();
         await delay(100);
         toggleCountdownHand();
     }
+    countdown.textContent = "1";
     await delay(800);
-    toggleCountdown();
+    toggleCountdownHand();
     await delay(100);
     toggleResult(player, computer);
+    updateScore(result);
+
+    
 }
 
 function toggleCountdownHand() {
@@ -103,4 +112,20 @@ function toggleResult(player, computer) {
 
 function capitaliseFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
+}
+
+function updateScore(result) {
+
+    let userScore = document.querySelector(".left-score");
+    let compScore = document.querySelector(".right-score");
+
+    if (result === "win") {
+        userScore.textContent = `YOU: ${uScore++}`;
+        countdown.textContent = "<-";
+    } else if (result === "lose") {
+        compScore.textContent = `CPU: ${cScore++}`;
+        countdown.textContent = "->";
+    } else {
+        countdown.textContent = "DRAW";
+    }
 }
