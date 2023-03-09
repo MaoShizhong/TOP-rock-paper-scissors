@@ -120,11 +120,11 @@ function updateScore(result) {
     let compScore = document.querySelector(".right-score");
 
     if (result === "win") {
-        userScore.textContent = `YOU: ${uScore++}`;
-        countdown.textContent = "<-";
+        userScore.textContent = `YOU: ${++uScore}`;
+        countdown.textContent = "<=";
     } else if (result === "lose") {
-        compScore.textContent = `CPU: ${cScore++}`;
-        countdown.textContent = "->";
+        compScore.textContent = `CPU: ${++cScore}`;
+        countdown.textContent = "=>";
     } else {
         countdown.textContent = "DRAW";
     }
