@@ -1,3 +1,4 @@
+// images
 const rockUser = document.querySelector("#rock-user");
 const paperUser = document.querySelector("#paper-user");
 const scissorsUser = document.querySelector("#scissors-user");
@@ -6,26 +7,83 @@ const rockComp = document.querySelector("#rock-comp");
 const paperComp = document.querySelector("#paper-comp");
 const scissorsComp = document.querySelector("#scissors-comp");
 const shakeComp = document.querySelector("#shake-comp");
+
+// main game elements
+let userScore = document.querySelector(".left-score");
+let compScore = document.querySelector(".right-score");
 let countdown = document.querySelector(".countdown");
-
-let choice = document.querySelectorAll(".button");
-
 let uScore = 0;
 let cScore = 0;
+
+// main divs
+let intro = document.querySelector(".intro");
+let game = document.querySelector(".game");
+let gameArea = document.querySelector(".game-area");
+let outcome = document.querySelector(".outcome");
+
+// player choice of R, P or S
+let choice = document.querySelectorAll(".button");
+
+// select score limit
+let scoreLimit;
+let rounds = document.querySelectorAll(".round");
+for (let i = 0; i < rounds.length; i++) {
+    rounds[i].addEventListener("click", function() {
+        scoreLimit = parseInt(rounds[i].textContent);
+        intro.classList.toggle("hidden");
+        game.classList.toggle("hidden");
+        gameArea.classList.toggle("hidden");
+    });
+}
 
 // pressing button plays a round
 for (let i = 0; i < choice.length; i++) {
     choice[i].addEventListener("click", function() {
         resetHands();
+        outcome.textContent = "";
         
         // assign choices and get result
-        let playerSelection = capitaliseFirstLetter(choice[i].innerHTML);
+        let playerSelection = choice[i].textContent.toLowerCase();
         let computerSelection = getComputerChoice();
 
         const countdown = ["3", "2"];
         playAnimation(playerSelection, computerSelection, countdown);
     });
 }
+
+// ends game when score limit reached
+function checkGameOver() {
+    if (uScore === scoreLimit || cScore === scoreLimit) {
+        choice.forEach(button => button.disabled = true);
+
+        again.classList.toggle("hidden");
+
+        if (uScore > cScore) {
+            outcome.textContent = `YOU WON!\r\nYou reached ${scoreLimit} wins first!`;
+        } else {
+            outcome.textContent = `YOU LOST!\r\nThe computer beat you to ${scoreLimit} wins...`;
+        }
+    }
+}
+
+// reset everything to play again
+const again = document.querySelector("#playAgain");
+again.addEventListener("click", function() {
+    uScore = cScore = 0;
+    userScore.textContent = "YOU: 0";
+    compScore.textContent = "CPU: 0";
+
+    resetHands();
+
+    choice.forEach(button => button.disabled = false);
+
+    intro.classList.toggle("hidden");
+    game.classList.toggle("hidden");
+    gameArea.classList.toggle("hidden");
+    outcome.classList.toggle("hidden");
+    again.classList.toggle("hidden");
+});
+
 
 function resetHands() {
     rockUser.classList.remove("hidden");
@@ -44,23 +102,23 @@ function resetHands() {
 function getComputerChoice() {
     let result = Math.floor(Math.random() * 3);
     
-    return result === 0 ? "Rock"
-         : result === 1 ? "Paper"
-         : "Scissors";
+    return result === 0 ? "rock"
+         : result === 1 ? "paper"
+         : "scissors";
 }
 
 function getRoundResult(player, computer) {
-    if (player === "Rock") {
-        return computer === "Rock" ? "draw"
-             : computer === "Paper" ? "lose"
+    if (player === "rock") {
+        return computer === "rock" ? "draw"
+             : computer === "paper" ? "lose"
              : "win";
-    } else if (player === "Paper") {
-        return computer === "Rock" ? "win"
-             : computer === "Paper" ? "draw"
+    } else if (player === "paper") {
+        return computer === "rock" ? "win"
+             : computer === "paper" ? "draw"
              : "lose";
     } else {
-        return computer === "Rock" ? "lose"
-             : computer === "Paper" ? "win"
+        return computer === "rock" ? "lose"
+             : computer === "paper" ? "win"
              : "draw";
     }
 }
@@ -76,19 +134,18 @@ async function playAnimation(player, computer, count) {
 
     for (let i = 0; i < 2; i++) {
         countdown.textContent = count[i];
-        await delay(800);
+        await delay(600);
         toggleCountdownHand();
-        await delay(100);
+        await delay(80);
         toggleCountdownHand();
     }
     countdown.textContent = "1";
-    await delay(800);
+    await delay(600);
     toggleCountdownHand();
-    await delay(100);
+    await delay(80);
     toggleResult(player, computer);
-    updateScore(result);
-
-    
+    countdown.textContent = "";
+    updateScore(result, player, computer); 
 }
 
 function toggleCountdownHand() {
@@ -99,33 +156,28 @@ function toggleCountdownHand() {
 }
 
 function toggleResult(player, computer) {
-    if (player === "Rock") rockUser.classList.toggle("hidden");
-    else if (player === "Paper") paperUser.classList.toggle("hidden");
-    else if (player ==="Scissors") scissorsUser.classList.toggle("hidden");
+    if (player === "rock") rockUser.classList.toggle("hidden");
+    else if (player === "paper") paperUser.classList.toggle("hidden");
+    else if (player ==="scissors") scissorsUser.classList.toggle("hidden");
     shakeUser.classList.toggle("hidden");
 
-    if (computer === "Rock") rockComp.classList.toggle("hidden");
-    else if (computer === "Paper") paperComp.classList.toggle("hidden");
-    else if (computer === "Scissors") scissorsComp.classList.toggle("hidden");
+    if (computer === "rock") rockComp.classList.toggle("hidden");
+    else if (computer === "paper") paperComp.classList.toggle("hidden");
+    else if (computer === "scissors") scissorsComp.classList.toggle("hidden");
     shakeComp.classList.toggle("hidden");
 }
 
-function capitaliseFirstLetter(text) {
-    return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
-}
-
-function updateScore(result) {
-
-    let userScore = document.querySelector(".left-score");
-    let compScore = document.querySelector(".right-score");
+function updateScore(result, playerSelection, computerSelection) {
 
     if (result === "win") {
         userScore.textContent = `YOU: ${++uScore}`;
-        countdown.textContent = "<=";
+        outcome.textContent = `Your ${playerSelection} beats CPU's ${computerSelection} - you win!`;
+        checkGameOver();
     } else if (result === "lose") {
         compScore.textContent = `CPU: ${++cScore}`;
-        countdown.textContent = "=>";
+        outcome.textContent = `Your ${playerSelection} couldn't beat CPU's ${computerSelection} - you lose!`;
+        checkGameOver();
     } else {
-        countdown.textContent = "DRAW";
+        outcome.textContent = "Draw!";
     }
 }

@@ -13,32 +13,55 @@
 
     <body>
         <h1>Rock, Paper, Scissors</h1>
-        <div class="score">
-            <div class="left-score">YOU: 0</div>
-            <div class="right-score">CPU: 0</div>
-        </div>
-        <div class="rps-choice">
-            <button class="button" id="rock">ROCK</button>
-            <button class="button" id="paper">PAPER</button>
-            <button class="button" id="scissors">SCISSORS</button>
-        </div>
-        <div class="game-area">
-            <div class="left-image">
-                <img id="rock-user" src="./images/rock-user.png" alt="rock">
-                <img id="paper-user" class="hidden" src="./images/paper-user.png" alt="paper">
-                <img id="scissors-user" class="hidden" src="./images/scissors-user.png" alt="scissors">
-                <img id="shake-user" class="hidden" src="./images/countdown-user.png">
-            </div>
-            <div class="countdown">
-                
-            </div>
-            <div class="right-image">
-                <img id="rock-comp" src="./images/rock-comp.png" alt="rock">
-                <img id="paper-comp" class="hidden" src="./images/paper-comp.png" alt="paper">
-                <img id="scissors-comp" class="hidden" src="./images/scissors-comp.png" alt="scissors">
-                <img id="shake-comp" class="hidden" src="./images/countdown-comp.png">
+
+        <div class="intro">
+            <div>First to:</div>
+            <div class="rounds">
+                <button class="round">3</button>
+                <button class="round">5</button>
+                <button class="round">7</button>
             </div>
         </div>
+
+        <div class="game hidden">
+
+            <div class="score">
+                <div class="left-score">YOU: 0</div>
+                <div class="right-score">CPU: 0</div>
+            </div>
+
+            <div class="rps-choice">
+                <button class="button" id="rock">ROCK</button>
+                <button class="button" id="paper">PAPER</button>
+                <button class="button" id="scissors">SCISSORS</button>
+            </div>
+            </div>
+
+            <div class="game-area hidden">
+                <div class="left-image">
+                    <img id="rock-user" src="./images/rock-user.png" alt="rock">
+                    <img id="paper-user" class="hidden" src="./images/paper-user.png" alt="paper">
+                    <img id="scissors-user" class="hidden" src="./images/scissors-user.png" alt="scissors">
+                    <img id="shake-user" class="hidden" src="./images/countdown-user.png">
+                </div>
+                <div class="countdown">
+            
+                </div>
+                <div class="right-image">
+                    <img id="rock-comp" src="./images/rock-comp.png" alt="rock">
+                    <img id="paper-comp" class="hidden" src="./images/paper-comp.png" alt="paper">
+                    <img id="scissors-comp" class="hidden" src="./images/scissors-comp.png" alt="scissors">
+                    <img id="shake-comp" class="hidden" src="./images/countdown-comp.png">
+                </div>
+            </div>
+
+            <div class="outcome"></div>
+
+            <button id="playAgain" class="hidden">PLAY AGAIN?</button>
+
+        </div>
+
+        
     </body>
 
 </html>
