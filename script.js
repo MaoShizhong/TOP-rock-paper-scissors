@@ -1,11 +1,12 @@
 const rockUser = document.querySelector("#rock-user");
 const paperUser = document.querySelector("#paper-user");
 const scissorsUser = document.querySelector("#scissors-user");
-const countdownUser = document.querySelector("#countdown-user");
+const shakeUser = document.querySelector("#shake-user");
 const rockComp = document.querySelector("#rock-comp");
 const paperComp = document.querySelector("#paper-comp");
 const scissorsComp = document.querySelector("#scissors-comp");
-const countdownComp = document.querySelector("#countdown-comp");
+const shakeComp = document.querySelector("#shake-comp");
+let countdown = document.querySelector(".countdown");
 
 let choice = document.querySelectorAll(".button");
 
@@ -19,7 +20,8 @@ for (let i = 0; i < choice.length; i++) {
         let computerSelection = getComputerChoice();
         let result = getRoundResult(playerSelection, computerSelection);
 
-        playAnimation(playerSelection, computerSelection);
+        const countdown = [3, 2, 1, "GO"];
+        playAnimation(playerSelection, computerSelection, countdown);
 
         // updateScore(result);
     });
@@ -29,12 +31,12 @@ function resetHands() {
     rockUser.classList.remove("hidden");
     paperUser.classList.add("hidden");
     scissorsUser.classList.add("hidden");
-    countdownUser.classList.add("hidden");
+    shakeUser.classList.add("hidden");
 
     rockComp.classList.remove("hidden");
     paperComp.classList.add("hidden");
     scissorsComp.classList.add("hidden");
-    countdownComp.classList.add("hidden");
+    shakeComp.classList.add("hidden");
 }
 
 function getComputerChoice() {
@@ -67,12 +69,12 @@ function delay(milliseconds) {
     });
 }
 
-async function playAnimation(player, computer) {
+async function playAnimation(player, computer, count) {
     for (let i = 0; i < 2; i++) {
         await delay(800);
-        toggleCountdown();
+        toggleCountdownHand();
         await delay(100);
-        toggleCountdown();
+        toggleCountdownHand();
     }
     await delay(800);
     toggleCountdown();
@@ -80,23 +82,23 @@ async function playAnimation(player, computer) {
     toggleResult(player, computer);
 }
 
-function toggleCountdown() {
+function toggleCountdownHand() {
     rockUser.classList.toggle("hidden");
     rockComp.classList.toggle("hidden");
-    countdownUser.classList.toggle("hidden");
-    countdownComp.classList.toggle("hidden");
+    shakeUser.classList.toggle("hidden");
+    shakeComp.classList.toggle("hidden");
 }
 
 function toggleResult(player, computer) {
     if (player === "Rock") rockUser.classList.toggle("hidden");
     else if (player === "Paper") paperUser.classList.toggle("hidden");
     else if (player ==="Scissors") scissorsUser.classList.toggle("hidden");
-    countdownUser.classList.toggle("hidden");
+    shakeUser.classList.toggle("hidden");
 
     if (computer === "Rock") rockComp.classList.toggle("hidden");
     else if (computer === "Paper") paperComp.classList.toggle("hidden");
     else if (computer === "Scissors") scissorsComp.classList.toggle("hidden");
-    countdownComp.classList.toggle("hidden");
+    shakeComp.classList.toggle("hidden");
 }
 
 function capitaliseFirstLetter(text) {

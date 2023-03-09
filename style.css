@@ -50,10 +50,14 @@ button {
     width: 900px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .game-area div {
     text-align: center;
+    color: white;
+    font-size: 66px;
+    font-weight: bolder;
 }
 
 .hidden {
