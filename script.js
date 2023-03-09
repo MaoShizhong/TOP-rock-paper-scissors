@@ -1,91 +1,104 @@
-game()
+const rockUser = document.querySelector("#rock-user");
+const paperUser = document.querySelector("#paper-user");
+const scissorsUser = document.querySelector("#scissors-user");
+const countdownUser = document.querySelector("#countdown-user");
+const rockComp = document.querySelector("#rock-comp");
+const paperComp = document.querySelector("#paper-comp");
+const scissorsComp = document.querySelector("#scissors-comp");
+const countdownComp = document.querySelector("#countdown-comp");
 
-function game() {
-    
-    let playerScore = 0;
-    let computerScore = 0;
-    const rounds = 5;
+let choice = document.querySelectorAll(".button");
 
-    for (let i = 1; i <= rounds; i++) {
-        let playerSelection;
-        do {
-            playerSelection = prompt("Enter either rock, paper or scissors in the box:")
-        } while (playerSelection.toLowerCase() !== "rock" && playerSelection.toLowerCase() !== "paper" && playerSelection.toLowerCase() !== "scissors")
-
-        playerSelection = playerSelection.toLowerCase();
+// pressing button plays a round
+for (let i = 0; i < choice.length; i++) {
+    choice[i].addEventListener("click", function(e) {
+        resetHands();
+        
+        // assign choices and get result
+        let playerSelection = capitaliseFirstLetter(choice[i].innerHTML);
         let computerSelection = getComputerChoice();
+        let result = getRoundResult(playerSelection, computerSelection);
 
-        let result = playRound(playerSelection, computerSelection);
+        playAnimation(playerSelection, computerSelection);
 
-        if (result === "win") {
-            console.log(`You win! ${capitaliseFirstLet(playerSelection)} beats ${computerSelection}!`);
-            playerScore++;
-        } else if (result === "lose") {
-            console.log(`You lose! ${capitaliseFirstLet(computerSelection)} beats ${playerSelection}!`);
-            computerScore++;
-        } else {
-            console.log(`Draw! You both picked ${playerSelection}!`);
-        }
-
-        console.log(`Player ${playerScore} - ${computerScore} Computer`);
-    }
-
-    printFinalScore(rounds, playerScore, computerScore);
+        // updateScore(result);
+    });
 }
 
+function resetHands() {
+    rockUser.classList.remove("hidden");
+    paperUser.classList.add("hidden");
+    scissorsUser.classList.add("hidden");
+    countdownUser.classList.add("hidden");
 
-function printFinalScore(rounds, playerScore, computerScore) {
-    if (playerScore > computerScore) {
-        console.log(`\nAfter ${rounds} rounds, you win!\nThe final score is ${playerScore} - ${computerScore}`);
-    } else if (playerScore < computerScore) {
-        console.log(`\nAfter ${rounds} rounds, you lose!\nThe final score is ${playerScore} - ${computerScore}`);
-    } else {
-        console.log(`\nAfter ${rounds} rounds, it's a draw!\nThe final score is ${playerScore} - ${computerScore}`);
-    }
+    rockComp.classList.remove("hidden");
+    paperComp.classList.add("hidden");
+    scissorsComp.classList.add("hidden");
+    countdownComp.classList.add("hidden");
 }
-
-
-function capitaliseFirstLet(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
 
 function getComputerChoice() {
     let result = Math.floor(Math.random() * 3);
-    if (result === 0) {
-        return "rock";
-    } else if (result === 1) {
-        return "paper";
+    
+    return result === 0 ? "Rock"
+         : result === 1 ? "Paper"
+         : "Scissors";
+}
+
+function getRoundResult(player, computer) {
+    if (player === "Rock") {
+        return computer === "Rock" ? "draw"
+             : computer === "Paper" ? "lose"
+             : "win";
+    } else if (player === "Paper") {
+        return computer === "Rock" ? "lose"
+             : computer === "Paper" ? "draw"
+             : "win";
     } else {
-        return "scissors";
+        return computer === "Rock" ? "draw"
+             : computer === "Paper" ? "win"
+             : "lose";
     }
 }
 
+function delay(milliseconds) {
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
 
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection === "rock") {
-        if (computerSelection === "rock") {
-            return "draw";
-        } else if (computerSelection === "paper") {
-            return "lose";
-        } else {
-            return "win";
-        }
-    } else if (playerSelection === "paper") {
-        if (computerSelection === "rock") {
-            return "lose";
-        } else if (computerSelection === "paper") {
-            return "draw";
-        } else {
-            return "win";
-        }
-    } else {
-        if (computerSelection === "scissors") {
-            return "draw";
-        } else if (computerSelection === "paper") {
-            return "win";
-        } else {
-            return "lose";
-        }
+async function playAnimation(player, computer) {
+    for (let i = 0; i < 2; i++) {
+        await delay(800);
+        toggleCountdown();
+        await delay(100);
+        toggleCountdown();
     }
+    await delay(800);
+    toggleCountdown();
+    await delay(100);
+    toggleResult(player, computer);
+}
+
+function toggleCountdown() {
+    rockUser.classList.toggle("hidden");
+    rockComp.classList.toggle("hidden");
+    countdownUser.classList.toggle("hidden");
+    countdownComp.classList.toggle("hidden");
+}
+
+function toggleResult(player, computer) {
+    if (player === "Rock") rockUser.classList.toggle("hidden");
+    else if (player === "Paper") paperUser.classList.toggle("hidden");
+    else if (player ==="Scissors") scissorsUser.classList.toggle("hidden");
+    countdownUser.classList.toggle("hidden");
+
+    if (computer === "Rock") rockComp.classList.toggle("hidden");
+    else if (computer === "Paper") paperComp.classList.toggle("hidden");
+    else if (computer === "Scissors") scissorsComp.classList.toggle("hidden");
+    countdownComp.classList.toggle("hidden");
+}
+
+function capitaliseFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
 }

@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
+        <script src="game_functions.js" defer></script>
         <script src="script.js" defer></script>
         <title>Rock, Paper, Scissors</title>
     </head>
@@ -18,22 +19,22 @@
             <div class="right-score">CPU: 0</div>
         </div>
         <div class="rps-choice">
-            <button id="rock">ROCK</button>
-            <button id="paper">PAPER</button>
-            <button id="scissors">SCISSORS</button>
+            <button class="button" id="rock">ROCK</button>
+            <button class="button" id="paper">PAPER</button>
+            <button class="button" id="scissors">SCISSORS</button>
         </div>
         <div class="game-area">
             <div class="left-image">
-                <img src="./images/rock-user.png" alt="waiting to start game">
-                <img class="hidden" src="./images/paper-user.png" alt="paper">
-                <img class="hidden" src="./images/scissors-user.png" alt="scissors">
-                <img class="hidden" src="./images/countdown-user.png">
+                <img id="rock-user" src="./images/rock-user.png" alt="waiting to start game">
+                <img id="paper-user" class="hidden" src="./images/paper-user.png" alt="paper">
+                <img id="scissors-user" class="hidden" src="./images/scissors-user.png" alt="scissors">
+                <img id="countdown-user" class="hidden" src="./images/countdown-user.png">
             </div>
             <div class="right-image">
-                <img src="./images/rock-comp.png" alt="waiting to start game">
-                <img class="hidden" src="./images/paper-comp.png" alt="paper">
-                <img class="hidden" src="./images/scissors-comp.png" alt="scissors">
-                <img class="hidden" src="./images/countdown-comp.png">
+                <img id="rock-comp" src="./images/rock-comp.png" alt="waiting to start game">
+                <img id="paper-comp" class="hidden" src="./images/paper-comp.png" alt="paper">
+                <img id="scissors-comp" class="hidden" src="./images/scissors-comp.png" alt="scissors">
+                <img id="countdown-comp" class="hidden" src="./images/countdown-comp.png">
             </div>
         </div>
     </body>
