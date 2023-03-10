@@ -34,6 +34,7 @@ for (let i = 0; i < rounds.length; i++) {
         intro.classList.toggle("hidden");
         game.classList.toggle("hidden");
         gameArea.classList.toggle("hidden");
+        outcome.classList.toggle("hidden");
         
         firstTo.textContent = `First to ${scoreLimit}`;
     });
@@ -87,7 +88,7 @@ again.addEventListener("click", function() {
     again.classList.toggle("hidden");
 });
 
-
+// revert images to default state
 function resetHands() {
     rockUser.classList.remove("hidden");
     paperUser.classList.add("hidden");
@@ -132,6 +133,7 @@ function delay(milliseconds) {
     });
 }
 
+// count down with hand animation
 async function playAnimation(player, computer, count) {
     let result = getRoundResult(player, computer);
 
@@ -158,6 +160,7 @@ function toggleCountdownHand() {
     shakeComp.classList.toggle("hidden");
 }
 
+// show final outcome images
 function toggleResult(player, computer) {
     if (player === "rock") rockUser.classList.toggle("hidden");
     else if (player === "paper") paperUser.classList.toggle("hidden");
@@ -171,7 +174,6 @@ function toggleResult(player, computer) {
 }
 
 function updateScore(result, playerSelection, computerSelection) {
-
     if (result === "win") {
         userScore.textContent = `YOU: ${++uScore}`;
         outcome.textContent = `Your ${playerSelection} beats CPU's ${computerSelection}! +1 point!`;
