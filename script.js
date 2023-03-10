@@ -11,6 +11,7 @@ const shakeComp = document.querySelector("#shake-comp");
 // main game elements
 let userScore = document.querySelector(".left-score");
 let compScore = document.querySelector(".right-score");
+let firstTo = document.querySelector(".rule");
 let countdown = document.querySelector(".countdown");
 let uScore = 0;
 let cScore = 0;
@@ -33,6 +34,8 @@ for (let i = 0; i < rounds.length; i++) {
         intro.classList.toggle("hidden");
         game.classList.toggle("hidden");
         gameArea.classList.toggle("hidden");
+        
+        firstTo.textContent = `First to ${scoreLimit}`;
     });
 }
 
@@ -134,15 +137,15 @@ async function playAnimation(player, computer, count) {
 
     for (let i = 0; i < 2; i++) {
         countdown.textContent = count[i];
-        await delay(600);
+        await delay(500);
         toggleCountdownHand();
-        await delay(80);
+        await delay(60);
         toggleCountdownHand();
     }
     countdown.textContent = "1";
-    await delay(600);
+    await delay(500);
     toggleCountdownHand();
-    await delay(80);
+    await delay(60);
     toggleResult(player, computer);
     countdown.textContent = "";
     updateScore(result, player, computer); 
@@ -171,13 +174,13 @@ function updateScore(result, playerSelection, computerSelection) {
 
     if (result === "win") {
         userScore.textContent = `YOU: ${++uScore}`;
-        outcome.textContent = `Your ${playerSelection} beats CPU's ${computerSelection} - you win!`;
+        outcome.textContent = `Your ${playerSelection} beats CPU's ${computerSelection}! +1 point!`;
         checkGameOver();
     } else if (result === "lose") {
         compScore.textContent = `CPU: ${++cScore}`;
-        outcome.textContent = `Your ${playerSelection} couldn't beat CPU's ${computerSelection} - you lose!`;
+        outcome.textContent = `Your ${playerSelection} couldn't beat CPU's ${computerSelection}... CPU +1 point...`;
         checkGameOver();
     } else {
-        outcome.textContent = "Draw!";
+        outcome.textContent = "Draw";
     }
 }
