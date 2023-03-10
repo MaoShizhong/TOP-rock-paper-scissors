@@ -37,6 +37,7 @@ for (let i = 0; i < rounds.length; i++) {
         outcome.classList.toggle("hidden");
         
         firstTo.textContent = `First to ${scoreLimit}`;
+        outcome.textContent = "";
     });
 }
 
